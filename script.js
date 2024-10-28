@@ -1,13 +1,15 @@
 //your code here
-let arr = [];
+const reset_btn = document.getElementById('reset');
+const verify_btn = document.getElementById('verify');
+const result = document.querySelector('#para');
 let selectedDivs_count = 0;
 
 function arrange_img_randomly() {
-    document.getElementById('verify-btn').style.display = 'none';
-    document.querySelector('.result').innerText = null;
-    // const flex_container = document.querySelector('.flex');
+    verify_btn.style.display = 'none';
+	reset_btn.style.display = 'none';
+    result.innerText = null;
     selectedDivs_count = 0;
-    // flex_container.innerHTML = null;
+	
     let arr = [];
 
     while(true) {
@@ -30,74 +32,56 @@ function arrange_img_randomly() {
     if(duplicate_num < 1) {
 		arr.push(1);
 	} else {
-		arr.push(duplicate_num = 1);
+		arr.push(duplicate_num);
 	}
 
 	const allImages = document.querySelectorAll('.flex > img');
-	console.log(allImages);
 	allImages.forEach((image, i) => {
 		image.classList.add(`img${arr[i]}`);
+		image.classList.remove('selected');
 	})
-	
-
- //    const img1 = document.querySelector('.img1');
-	// img1.classList.add('img1');
-    
- //    const img2 = document.querySelector('.img2');
-	// img2.classList.add('img2');
-    
- //    const img3 = document.querySelector('.img3');
-	// img3.classList.add('img3');
-    
- //    const img4 = document.querySelector('.img4');
- //    img4.classList.add('img4');
-	
- //    const img5 = document.querySelector('.img5');
- //    img5.classList.add('img5');
-
- //    const duplicateImg = document.querySelector('.duplicate');
- //    duplicateImg.classList.add(`img${n}`);
-
-	
-    // getAllBoxes();
+    getAllImages();
 }
 
 arrange_img_randomly();
 
-function getAllBoxes() {
-    const all_boxes = document.querySelectorAll('.flex > img');
-    
-    all_boxes.forEach((box) => {
-        box.onclick = () => {
-            box.style.borderColor = 'blue';
+function getAllImages() {
+    const all_images = document.querySelectorAll('.flex > img');
+
+    all_images.forEach((img) => {
+        img.onclick = () => {
+            img.classList.add('selected');
+			reset_btn.style.display = 'block';
             selectedDivs_count++;
             if(selectedDivs_count == 2) {
-                document.getElementById('verify-btn').style.display = 'block';
-            }
+                verify_btn.style.display = 'block';
+            } else {
+                verify_btn.style.display = 'none';
+			}
         }
     })
 }
 
 
 function verify() {
-    let textArr = [];
+    let imgIdArr = [];
+	const all_images = document.querySelectorAll('.flex > img');
 
-    const all_boxes = document.querySelectorAll('.flex > img');
-
-    all_boxes.forEach((box) => {
-        if(box.style.borderColor == 'blue') {
-            textArr.push(box.innerText);
-        }
-    })
-    // console.log(arr);
-    
-    const result = document.querySelector('.result');
+	for(let i=0; i<all_images.length; i++) {
+		if(all_images[i].classList[1] == 'selected') {
+			imgIdArr.push(all_images[i].classList[0]);
+		}
+	}
+	console.log('textArr', imgIdArr);
+	
     result.innerText = null;
 
-    if(textArr[0] == textArr[1]) {
-        result.innerText = 'You are a human, Congratulations!'
+    if(imgIdArr[0] == imgIdArr[1]) {
+		verify_btn.style.display = 'none';
+        result.innerText = 'You are a human. Congratulations!'
     } else {
-        result.innerText = 'We have not recognized you as a human.'
+		verify_btn.style.display = 'none';
+        result.innerText = `We can't verify you as a human. You selected the non-identical tiles.`
     }
 
     document.body.append(result);
