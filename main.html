@@ -10,7 +10,26 @@
   <body>
     <main>
       <!-- solution start -->
-      
+		<h1 id="heading">Verify that you are a Human!</h1>
+		
+		<div class="flex">
+			<img src='' alt='img1' />
+			<img src='' alt='img2' />
+			<img src='' alt='img3' />
+			<img src='' alt='img4' />
+			<img src='' alt='img5' />
+			<img src='' alt='duplicate img' />
+		</div>
+		
+		<h3 id='h'>Please click on the identical tiles to verify that you are not a robot.</h3>
+	
+		<div id="buttons">
+			<button id='reset' onclick="arrange_img_randomly()">Reset</button>
+			<button id="verify-btn" onclick="verify()">Verify</button>
+		</div>
+
+	
+		<div class="result"></div>
       <!-- solution end -->
     </main>
     <script src="./script.js"></script>
